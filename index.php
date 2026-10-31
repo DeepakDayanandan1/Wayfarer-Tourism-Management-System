@@ -14,6 +14,7 @@ include('includes/config.php');
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <script src="js/jquery-1.12.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -39,7 +40,7 @@ include('includes/config.php');
 					<i class="fa fa-map-o"></i> Explore Tour Packages
 				</a>
 				<a class="hero-secondary-action" href="enquiry.php">
-					<i class="fa fa-paper-plane-o"></i> Plan Custom Trip
+					<i class="fa fa-plane"></i> Plan Custom Trip
 				</a>
 			</div>
 		</div>
@@ -65,7 +66,7 @@ include('includes/config.php');
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-6 feature-item wow fadeInUp animated" data-wow-delay=".4s">
-				<div class="feature-icon"><i class="fa fa-binoculars"></i></div>
+				<div class="feature-icon"><i class="fa fa-users"></i></div>
 				<div class="feature-text">
 					<h4>Expert Guides</h4>
 					<p>Local specialists and 24/7 dedicated concierge.</p>
