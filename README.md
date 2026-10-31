@@ -4,7 +4,6 @@
 [![Database](https://img.shields.io/badge/Database-MySQL%20%7C%20MariaDB-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Frontend](https://img.shields.io/badge/Frontend-Bootstrap%20%7C%20jQuery%20%7C%20CSS3-563D7C?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Architecture](https://img.shields.io/badge/Architecture-Server--Rendered%20PDO-green)](https://www.php.net/manual/en/book.pdo.php)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Wayfarer** is a robust, full-featured, server-rendered Tourism and Holiday Package Management web application. Built with modern PHP (PDO with parameterized queries) and MySQL, it provides an intuitive public portal for travelers to discover packages and book holidays, alongside a high-density, real-time administrative command center.
 
@@ -202,8 +201,4 @@ The core data store (`tms`) contains 7 primary relational tables:
   3. Serve over HTTPS with HTTP-only, secure session cookie flags.
   4. Restrict file uploads in `admin/create-package.php` to validated MIME types (`image/jpeg`, `image/png`, `image/webp`).
 
----
 
-## 📄 License & Attribution
-
-This project is open-source under the [MIT License](LICENSE). Contributions, issues, and feature requests are welcome!
