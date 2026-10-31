@@ -1,11 +1,11 @@
 <?php
 error_reporting(0);
-if(isset($_POST['submit']))
+if(isset($_POST['submit_issue']))
 {
 $issue=$_POST['issue'];
 $description=$_POST['description'];
 $email=$_SESSION['login'];
-$sql="INSERT INTO  tblissues(UserEmail,Issue,Description) VALUES(:email,:issue,:description)";
+$sql="INSERT INTO tblissues(UserEmail,Issue,Description) VALUES(:email,:issue,:description)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':issue',$issue,PDO::PARAM_STR);
 $query->bindParam(':description',$description,PDO::PARAM_STR);
@@ -14,7 +14,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$_SESSION['msg']="Info successfully submited ";
+$_SESSION['msg']="Your support ticket has been submitted. Our concierge team will review it shortly.";
 echo "<script type='text/javascript'> document.location = 'thankyou.php'; </script>";
 }
 else 
@@ -25,43 +25,38 @@ echo "<script type='text/javascript'> document.location = 'thankyou.php'; </scri
 }
 ?>	
 
-	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+<div class="modal fade custom-auth-modal" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="writeUsModalLabel">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="writeUsModalLabel"><i class="fa fa-life-ring"></i> How Can We Help You?</h4>
+				<p class="modal-subtitle">Submit a request to our travel concierge team and we will assist promptly</p>
+			</div>
+			<div class="modal-body modal-spa">
+				<div class="writ">
+					<form name="help" method="post">
+						<div class="form-group-custom">
+							<label><i class="fa fa-tag"></i> Select Subject / Category</label>
+							<select id="country" name="issue" class="form-control-custom" required>
+								<option value="">-- Choose Category --</option> 		
+								<option value="Booking Issues">Booking Issues &amp; Questions</option>
+								<option value="Cancellation">Cancellation Request</option>
+								<option value="Refund">Refund Status &amp; Policy</option>
+								<option value="Itinerary Customization">Itinerary Customization</option>
+								<option value="Other">Other Inquiry</option>														
+							</select>
 						</div>
-							<section>
-							<form name="help" method="post">
-								<div class="modal-body modal-spa">
-									<div class="writ">
-										<h4>HOW CAN WE HELP YOU</h4>
-											<ul>
-												
-												<li class="na-me">
-													<select id="country" name="issue" class="frm-field required sect" required="">
-														<option value="">Select Issue</option> 		
-														<option value="Booking Issues">Booking Issues</option>
-														<option value="Cancellation"> Cancellation</option>
-														<option value="Refund">Refund</option>
-														<option value="Other">Other</option>														
-													</select>
-												</li>
-											
-												<li class="descrip">
-									<input class="special" type="text" placeholder="description"  name="description" required="">
-												</li>
-													<div class="clearfix"></div>
-											</ul>
-											<div class="sub-bn">
-												<form>
-													<button type="submit" name="submit" class="subbtn">Submit</button>
-												</form>
-											</div>
-									</div>
-								</div>
-								</form>
-							</section>
-					</div>
+						<div class="form-group-custom">
+							<label><i class="fa fa-pencil"></i> Detailed Description</label>
+							<textarea class="form-control-custom" rows="4" placeholder="Please describe how we can assist you..." name="description" required></textarea>
+						</div>
+						<div class="sub-bn" style="margin-top:20px;">
+							<button type="submit" name="submit_issue" class="btn-auth-primary">Submit Ticket</button>
+						</div>
+					</form>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>

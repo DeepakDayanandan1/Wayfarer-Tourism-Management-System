@@ -33,4 +33,6 @@ if ($phpModules -notcontains 'pdo_mysql') {
     $phpArguments += @('-d', "extension_dir=$extensionDir", '-d', 'extension=pdo_mysql')
 }
 
+Write-Host "Wayfarer – For people who love exploring is running at http://127.0.0.1:8000" -ForegroundColor Cyan
+Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Yellow
 & $phpPath @phpArguments -S 127.0.0.1:8000 -t $PSScriptRoot

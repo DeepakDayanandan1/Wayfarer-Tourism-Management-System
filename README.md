@@ -57,7 +57,7 @@ Open a second PowerShell terminal at the repository root and import the sample d
 
 Press Enter to use the defaults (`root`, `127.0.0.1`, and port `3307`). The separate local database has no root password initially. The setup script imports `database/tms.sql`, creates a dedicated app-only MySQL account with a random password, and saves that account to the ignored `config.local.php` file. If `tms` already contains tables, setup stops to avoid overwriting existing data.
 
-The existing MySQL service on port `3306` is left untouched. To stop the separate database, press Ctrl+C in its terminal. The PHP app uses the saved local configuration; environment variables `TMS_DB_HOST`, `TMS_DB_PORT`, `TMS_DB_NAME`, `TMS_DB_USER`, and `TMS_DB_PASS` can override it.
+The existing MySQL service on port `3306` is left untouched. To stop the separate database, press Ctrl+C in its terminal. The PHP app uses the saved local configuration; environment variables `TMS_DB_HOST`, `TMS_DB_PORT`, `TMS_DB_NAME`, `TMS_DB_USER`, and `TMS_DB_PASS` can override it. If you change a MySQL password in Workbench, update the matching account in the ignored `config.local.php` (host, port, database, username, and password must all match); changing the MySQL `root` password does not change the separate `tms_app` account created by setup.
 
 ### Start the site
 

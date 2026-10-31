@@ -3,87 +3,72 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 if(strlen($_SESSION['login'])==0)
-	{	
-header('location:index.php');
+{	
+	header('location:index.php');
+	exit;
 }
-else{
+else {
 ?>
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-<title>TMS | Tourism Management System</title>
+<title>Wayfarer – Raised Support Tickets</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Tourism Management System In PHP" />
-<script type="applijewelleryion/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="css/style.css" rel='stylesheet' type='text/css' />
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="css/font-awesome.css" rel="stylesheet">
-<!-- Custom Theme files -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
 <script src="js/jquery-1.12.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<!--animate-->
 <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
 <script src="js/wow.min.js"></script>
-	<script>
-		 new WOW().init();
-	</script>
-
-  <style>
-		.errorWrap {
-    padding: 10px;
-    margin: 0 0 20px 0;
-    background: #fff;
-    border-left: 4px solid #dd3d36;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-.succWrap{
-    padding: 10px;
-    margin: 0 0 20px 0;
-    background: #fff;
-    border-left: 4px solid #5cb85c;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-		</style>
+<script>
+	new WOW().init();
+</script>
 </head>
 <body>
-<!-- top-header -->
-<div class="top-header">
 <?php include('includes/header.php');?>
-<div class="banner-1 ">
-	<div class="container">
-		<h1 class="wow zoomIn animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">TMS-Tourism Management System</h1>
+
+<div class="inner-page-banner">
+	<div class="banner-overlay"></div>
+	<div class="container banner-inner-content">
+		<span class="banner-crumb"><a href="index.php">Home</a> / Dashboard / Tickets</span>
+		<h1 class="wow zoomIn animated" data-wow-delay=".2s">Raised Support Tickets</h1>
+		<p>Track the status of your concierge inquiries, cancellation requests, and administrator remarks.</p>
 	</div>
 </div>
-<!--- /banner-1 ---->
-<!--- privacy ---->
-<div class="privacy">
+
+<div class="dashboard-page-section">
 	<div class="container">
-		<h3 class="wow fadeInDown animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInDown;">Issue Tickets</h3>
-		<form name="chngpwd" method="post" onSubmit="return valid();">
-		 <?php if($error){?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } 
-				else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
-	<p>
-	<table border="1" width="100%">
-<tr align="center">
-<th>#</th>
-<th>Ticket Id</th>
-<th>Issue</th>	
-<th>Description</th>
-<th>Admin Remark</th>
-<th>Reg Date</th>
-<th>Remark date</th>
+		<div class="dashboard-card wow fadeInUp animated" data-wow-delay=".2s">
+			<div class="dashboard-card-header">
+				<div class="header-titles">
+					<h2><i class="fa fa-ticket"></i> Support History</h2>
+					<p>Inquiries registered under <strong><?php echo htmlentities($_SESSION['login']); ?></strong></p>
+				</div>
+				<a href="#" data-toggle="modal" data-target="#myModal3" class="btn-book-new"><i class="fa fa-plus"></i> Submit New Ticket</a>
+			</div>
 
-</tr>
+			<div class="table-responsive custom-table-wrap">
+				<table class="table custom-table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Ticket Ref</th>
+							<th>Category</th>
+							<th>Your Inquiry</th>
+							<th>Concierge Remark</th>
+							<th>Submitted Date</th>
+							<th>Resolution Date</th>
+						</tr>
+					</thead>
+					<tbody>
 <?php 
-
-$uemail=$_SESSION['login'];;
-$sql = "SELECT * from tblissues where UserEmail=:uemail";
+$uemail=$_SESSION['login'];
+$sql = "SELECT * from tblissues where UserEmail=:uemail ORDER BY id DESC";
 $query = $dbh->prepare($sql);
 $query -> bindParam(':uemail', $uemail, PDO::PARAM_STR);
 $query->execute();
@@ -93,35 +78,45 @@ if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {	?>
-<tr align="center">
-<td ><?php echo htmlentities($cnt);?></td>
-<td width="100">#TKT-<?php echo htmlentities($result->id);?></td>
-<td><?php echo htmlentities($result->Issue);?></td>
-<td width="300"><?php echo htmlentities($result->Description);?></td>
-<td><?php echo htmlentities($result->AdminRemark);?></td>
-<td width="100"><?php echo htmlentities($result->PostingDate);?></td>
-<td width="100"><?php echo htmlentities($result->AdminremarkDate);?></td>
-</tr>
-<?php $cnt=$cnt+1; }} ?>
-	</table>
-		
-			</p>
-			</form>
-
-		
+						<tr>
+							<td><span class="row-num"><?php echo htmlentities($cnt);?></span></td>
+							<td><strong class="booking-ref">#TKT-<?php echo htmlentities($result->id);?></strong></td>
+							<td><span class="category-badge"><i class="fa fa-tag"></i> <?php echo htmlentities($result->Issue);?></span></td>
+							<td class="comment-cell"><?php echo htmlentities($result->Description);?></td>
+							<td>
+<?php if($result->AdminRemark) { ?>
+								<div class="admin-remark-box">
+									<i class="fa fa-comment"></i> <?php echo htmlentities($result->AdminRemark);?>
+								</div>
+<?php } else { ?>
+								<span class="status-pill status-pending"><i class="fa fa-clock-o"></i> Under Review</span>
+<?php } ?>
+							</td>
+							<td class="text-muted text-sm"><?php echo date('M d, Y', strtotime($result->PostingDate));?></td>
+							<td class="text-muted text-sm"><?php echo $result->AdminremarkDate ? date('M d, Y', strtotime($result->AdminremarkDate)) : 'Pending'; ?></td>
+						</tr>
+<?php $cnt=$cnt+1; }} else { ?>
+						<tr>
+							<td colspan="7" class="text-center empty-state-cell">
+								<div class="empty-state">
+									<i class="fa fa-check-circle-o"></i>
+									<h4>No support tickets found</h4>
+									<p>Have an inquiry about a trip, refund, or booking? Our team is always ready to assist.</p>
+									<a href="#" data-toggle="modal" data-target="#myModal3" class="btn-primary-action">Submit Ticket</a>
+								</div>
+							</td>
+						</tr>
+<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
-<!--- /privacy ---->
-<!--- footer-top ---->
-<!--- /footer-top ---->
+
 <?php include('includes/footer.php');?>
-<!-- signup -->
 <?php include('includes/signup.php');?>			
-<!-- //signu -->
-<!-- signin -->
 <?php include('includes/signin.php');?>			
-<!-- //signin -->
-<!-- write us -->
 <?php include('includes/write-us.php');?>
 </body>
 </html>
