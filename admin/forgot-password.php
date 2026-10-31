@@ -37,7 +37,7 @@ echo "<script>alert('Email id or Mobile no is invalid');</script>";
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin Forgot Password	</title>
+<title>Wayfarer | Admin Forgot Password	</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -48,7 +48,7 @@ echo "<script>alert('Email id or Mobile no is invalid');</script>";
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
 <!-- Graph CSS -->
 <link href="css/font-awesome.css" rel="stylesheet">
-<link rel="stylesheet" href="css/jquery-ui.css"> 
+
 <!-- jQuery -->
 <script src="js/jquery-2.1.4.min.js"></script>
 <!-- //jQuery -->
@@ -81,7 +81,6 @@ return true;
 				<input type="email" name="email" class="name" placeholder="Reg Email id" required="">
 				<div class="clearfix"></div>
 			</div>
-			<div>
 			<div class="username">
 				<span class="username">Mobile No:</span>
 				<input type="text" name="mobile" class="name" placeholder="Reg Mobile Number" required="" maxlength="10">

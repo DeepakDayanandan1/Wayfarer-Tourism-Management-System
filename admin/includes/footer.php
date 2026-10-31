@@ -1,3 +1,3 @@
 <div class="copyrights">
-	 <p>TMS. All Rights Reserved |  <a href="#">TMS</a> </p>
-</div>	
+	<p>&copy; <?php echo date('Y'); ?> Wayfarer. All Rights Reserved | Travel Management System</p>
+</div>

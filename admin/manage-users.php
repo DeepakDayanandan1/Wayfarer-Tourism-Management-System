@@ -11,7 +11,7 @@ else{
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin manage Users</title>
+<title>Wayfarer | Admin manage Users</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -74,7 +74,7 @@ else{
 				</div>
 <!--heder end here-->
 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a><i class="fa fa-angle-right"></i>Manage Users</li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a><i class="fa fa-angle-right"></i>Manage Users</li>
             </ol>
 <div class="agile-grids">	
 				<!-- tables -->
@@ -137,11 +137,7 @@ foreach($results as $result)
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
-<!--inner block start here-->
-<div class="inner-block">
 
-</div>
-<!--inner block end here-->
 <!--copy rights start here-->
 <?php include('includes/footer.php');?>
 <!--COPY rights end here-->

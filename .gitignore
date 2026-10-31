@@ -6,9 +6,6 @@
 .DS_Store
 Thumbs.db
 *.pem
-*.png
-*.jpg
-*.gif
 
 # Generated dependencies, caches, and logs
 /vendor/

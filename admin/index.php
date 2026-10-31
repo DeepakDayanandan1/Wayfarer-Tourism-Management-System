@@ -41,7 +41,7 @@ if(isset($_POST['login']))
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
 <!-- Graph CSS -->
 <link href="css/font-awesome.css" rel="stylesheet">
-<link rel="stylesheet" href="css/jquery-ui.css"> 
+
 <!-- jQuery -->
 <script src="js/jquery-2.1.4.min.js"></script>
 <style>

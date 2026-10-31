@@ -34,7 +34,7 @@ $msg="Package Updated Successfully";
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin Package Creation</title>
+<title>Wayfarer | Admin Package Creation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -80,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 <!--heder end here-->
 	<ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a><i class="fa fa-angle-right"></i>Update Tour Package </li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a><i class="fa fa-angle-right"></i>Update Tour Package </li>
             </ol>
 		<!--grid-->
  	<div class="grid-form">
@@ -176,15 +176,6 @@ foreach($results as $result)
 					</div>
 					
 					</form>
-
-     
-      
-
-      
-      <div class="panel-footer">
-		
-	 </div>
-    </form>
   </div>
  	</div>
  	<!--//grid-->
@@ -205,11 +196,7 @@ foreach($results as $result)
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
-<!--inner block start here-->
-<div class="inner-block">
 
-</div>
-<!--inner block end here-->
 <!--copy rights start here-->
 <?php include('includes/footer.php');?>
 <!--COPY rights end here-->

@@ -43,7 +43,7 @@ $error="Something went wrong. Please try again";
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin Package Creation</title>
+<title>Wayfarer | Admin Package Creation</title>
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
@@ -86,7 +86,7 @@ $error="Something went wrong. Please try again";
 				</div>
 <!--heder end here-->
 	<ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Create Package </li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a><i class="fa fa-angle-right"></i>Create Package </li>
             </ol>
 		<!--grid-->
  	<div class="grid-form">
@@ -162,15 +162,6 @@ $error="Something went wrong. Please try again";
 					</div>
 					
 					</form>
-
-     
-      
-
-      
-      <div class="panel-footer">
-		
-	 </div>
-    </form>
   </div>
  	</div>
  	<!--//grid-->
@@ -191,11 +182,7 @@ $error="Something went wrong. Please try again";
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
-<!--inner block start here-->
-<div class="inner-block">
 
-</div>
-<!--inner block end here-->
 <!--copy rights start here-->
 <?php include('includes/footer.php');?>
 <!--COPY rights end here-->

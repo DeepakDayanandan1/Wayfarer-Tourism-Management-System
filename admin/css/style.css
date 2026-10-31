@@ -6477,21 +6477,46 @@ a:focus {
     width: auto;
     min-height: 100vh;
     margin-left: 248px;
-    padding: 0 30px 28px;
+    padding: 0 28px 24px;
     transition: margin .25s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .page-container.sidebar-collapsed .left-content {
     float: none;
     width: auto;
     margin-left: 72px;
-    padding-right: 28px;
-    padding-left: 28px;
+    padding-right: 24px;
+    padding-left: 24px;
 }
 
 .mother-grid-inner {
-    min-height: 100vh;
+    flex: 1 0 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     background: transparent;
+}
+
+.agile-grids,
+.grid-form {
+    flex: 1 0 auto;
+    margin: 0 0 20px 0;
+}
+
+.inner-block {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.panel-footer:empty {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .sidebar-menu,
@@ -6757,9 +6782,44 @@ a:hover .four-agileinfo {
     color: var(--admin-muted);
 }
 
-.w3l-table-info,
 .agile-tables {
-    padding: 18px;
+    padding: 20px;
+    margin: 0 0 20px 0;
+}
+
+.agile-tables .w3l-table-info {
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.agile-tables .w3l-table-info h2 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--admin-ink);
+}
+
+.grid-form1 {
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--admin-line);
+    border-radius: 12px;
+    background: var(--admin-surface);
+    box-shadow: var(--admin-shadow);
+}
+
+.grid-form1 h3,
+.grid-form1 h2 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--admin-ink);
+}
+
+.grid-form1 form {
+    margin: 0;
 }
 
 .w3l-table-info h2,
@@ -6961,13 +7021,18 @@ label.col-sm-3.control-label {
 }
 
 .copyrights {
+    margin-top: auto;
+    padding: 16px 0;
     border-top: 1px solid var(--admin-line);
     background: var(--admin-surface);
+    text-align: center;
 }
 
 .copyrights p,
 .copyrights p a {
+    margin: 0;
     color: var(--admin-muted);
+    font-size: 13px;
 }
 
 @media (max-width: 767px) {

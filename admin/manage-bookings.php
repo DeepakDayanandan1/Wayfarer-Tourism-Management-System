@@ -44,7 +44,7 @@ $msg="Booking Confirm successfully";
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin manage Bookings</title>
+<title>Wayfarer | Manage Bookings</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -116,7 +116,7 @@ $msg="Booking Confirm successfully";
 				</div>
 <!--heder end here-->
 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a><i class="fa fa-angle-right"></i>Manage Bookings</li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a><i class="fa fa-angle-right"></i>Manage Bookings</li>
             </ol>
 <div class="agile-grids">	
 				<!-- tables -->
@@ -196,7 +196,6 @@ else {?>
 						</tbody>
 					  </table>
 					</div>
-				  </table>
 
 				
 			</div>
@@ -216,11 +215,7 @@ else {?>
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
-<!--inner block start here-->
-<div class="inner-block">
 
-</div>
-<!--inner block end here-->
 <!--copy rights start here-->
 <?php include('includes/footer.php');?>
 <!--COPY rights end here-->

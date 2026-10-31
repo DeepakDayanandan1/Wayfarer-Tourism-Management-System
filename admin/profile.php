@@ -32,7 +32,7 @@ echo "<script> window.location.href =profile.php;</script>";
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TMS | Admin Profile</title>
+<title>Wayfarer | Admin Profile</title>
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
@@ -179,11 +179,7 @@ echo "<script> window.location.href =profile.php;</script>";
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
-<!--inner block start here-->
-<div class="inner-block">
 
-</div>
-<!--inner block end here-->
 <!--copy rights start here-->
 <?php include('includes/footer.php');?>
 <!--COPY rights end here-->
