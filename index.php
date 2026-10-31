@@ -14,7 +14,6 @@ include('includes/config.php');
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="css/font-awesome.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <script src="js/jquery-1.12.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -40,53 +39,43 @@ include('includes/config.php');
 					<i class="fa fa-map-o"></i> Explore Tour Packages
 				</a>
 				<a class="hero-secondary-action" href="enquiry.php">
-					<i class="fa fa-plane"></i> Plan Custom Trip
+					<i class="fa fa-paper-plane-o"></i> Plan Custom Trip
 				</a>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!-- Features Value Proposition Strip (Fully contained card - no overflow) -->
-<section class="features-bar-section">
+<!-- Features Value Proposition Strip -->
+<section class="features-bar">
 	<div class="container">
-		<div class="features-bar-card">
-			<div class="row features-row">
-				<div class="col-md-3 col-sm-6 feature-col wow fadeInUp animated" data-wow-delay=".2s">
-					<div class="feature-item">
-						<div class="feature-icon"><i class="fa fa-compass"></i></div>
-						<div class="feature-text">
-							<h4>Curated Trails</h4>
-							<p>Scenic journeys &amp; hand-picked accommodations.</p>
-						</div>
-					</div>
+		<div class="row">
+			<div class="col-md-3 col-sm-6 feature-item wow fadeInUp animated" data-wow-delay=".2s">
+				<div class="feature-icon"><i class="fa fa-compass"></i></div>
+				<div class="feature-text">
+					<h4>Curated Trails</h4>
+					<p>Scenic journeys &amp; hand-picked accommodations.</p>
 				</div>
-				<div class="col-md-3 col-sm-6 feature-col wow fadeInUp animated" data-wow-delay=".3s">
-					<div class="feature-item">
-						<div class="feature-icon"><i class="fa fa-shield"></i></div>
-						<div class="feature-text">
-							<h4>Safe &amp; Protected</h4>
-							<p>Verified bookings &amp; 100% financial protection.</p>
-						</div>
-					</div>
+			</div>
+			<div class="col-md-3 col-sm-6 feature-item wow fadeInUp animated" data-wow-delay=".3s">
+				<div class="feature-icon"><i class="fa fa-shield"></i></div>
+				<div class="feature-text">
+					<h4>Safe &amp; Protected</h4>
+					<p>Verified bookings &amp; 100% financial protection.</p>
 				</div>
-				<div class="col-md-3 col-sm-6 feature-col wow fadeInUp animated" data-wow-delay=".4s">
-					<div class="feature-item">
-						<div class="feature-icon"><i class="fa fa-users"></i></div>
-						<div class="feature-text">
-							<h4>Expert Guides</h4>
-							<p>Local specialists and 24/7 dedicated concierge.</p>
-						</div>
-					</div>
+			</div>
+			<div class="col-md-3 col-sm-6 feature-item wow fadeInUp animated" data-wow-delay=".4s">
+				<div class="feature-icon"><i class="fa fa-binoculars"></i></div>
+				<div class="feature-text">
+					<h4>Expert Guides</h4>
+					<p>Local specialists and 24/7 dedicated concierge.</p>
 				</div>
-				<div class="col-md-3 col-sm-6 feature-col wow fadeInUp animated" data-wow-delay=".5s">
-					<div class="feature-item">
-						<div class="feature-icon"><i class="fa fa-tag"></i></div>
-						<div class="feature-text">
-							<h4>Transparent Rates</h4>
-							<p>Honest pricing with no hidden tourist markups.</p>
-						</div>
-					</div>
+			</div>
+			<div class="col-md-3 col-sm-6 feature-item wow fadeInUp animated" data-wow-delay=".5s">
+				<div class="feature-icon"><i class="fa fa-tag"></i></div>
+				<div class="feature-text">
+					<h4>Transparent Rates</h4>
+					<p>Honest pricing with no hidden tourist markups.</p>
 				</div>
 			</div>
 		</div>
@@ -188,58 +177,17 @@ foreach($results as $result)
 	</div>
 </section>
 
-<!-- Luxury Call to Action Banner -->
+<!-- Call to Action Banner -->
 <section class="cta-banner-section">
 	<div class="container">
 		<div class="cta-banner-inner wow zoomIn animated" data-wow-delay=".2s">
-			<div class="cta-decor-orb-1"></div>
-			<div class="cta-decor-orb-2"></div>
-			
 			<div class="cta-content">
-				<div class="cta-luxury-pill">
-					<span class="cta-pill-icon"><i class="fa fa-star"></i></span>
-					<span class="cta-pill-text">Bespoke Expeditions &bull; Handcrafted For You</span>
-				</div>
-				
-				<h2 class="cta-headline">
-					Ready to turn wanderlust into <br class="hidden-xs">
-					<span class="cta-headline-accent">uncharted memories?</span>
-				</h2>
-				
-				<p class="cta-subheadline">
-					Let our private travel curators design a personalized expedition matching your exact rhythm, style, and wanderlust. From remote mountain sanctuaries to sun-drenched coastal hideaways.
-				</p>
-				
-				<div class="cta-perks-strip">
-					<div class="cta-perk">
-						<i class="fa fa-check-circle"></i> 100% Tailored Routes
-					</div>
-					<div class="cta-perk">
-						<i class="fa fa-check-circle"></i> 24/7 Dedicated Concierge
-					</div>
-					<div class="cta-perk">
-						<i class="fa fa-check-circle"></i> Zero Hidden Markups
-					</div>
-				</div>
-				
-				<div class="cta-action-row">
-					<a href="enquiry.php" class="btn-cta-luxury">
-						<i class="fa fa-plane"></i> Plan My Custom Trip <i class="fa fa-arrow-right"></i>
-					</a>
-					<a href="package-list.php" class="btn-cta-luxury-glass">
-						<i class="fa fa-compass"></i> Browse All Tours
-					</a>
-				</div>
-				
-				<div class="cta-trust-badge">
-					<span class="cta-stars">
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-					</span>
-					<span class="cta-trust-text">Rated <strong>4.9 / 5</strong> by 1,900+ explorers worldwide</span>
+				<span class="cta-subtitle">Start Your Expedition</span>
+				<h2>Ready to explore uncharted horizons with Wayfarer?</h2>
+				<p>Let our experienced travel curators build an expedition customized to your pace, style, and wanderlust.</p>
+				<div class="cta-buttons">
+					<a href="enquiry.php" class="btn-cta-primary"><i class="fa fa-paper-plane"></i> Plan My Custom Trip</a>
+					<a href="package-list.php" class="btn-cta-secondary"><i class="fa fa-compass"></i> Browse All Tours</a>
 				</div>
 			</div>
 		</div>

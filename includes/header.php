@@ -80,7 +80,7 @@
 				<li><a href="change-password.php"><i class="fa fa-key"></i> Change Password</a></li>
 				<li><a href="logout.php" class="mobile-logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
 			<?php } else { ?>
-				<li><a href="enquiry.php"><i class="fa fa-plane"></i> Trip Enquiry</a></li>
+				<li><a href="enquiry.php"><i class="fa fa-paper-plane-o"></i> Trip Enquiry</a></li>
 				<li><a href="admin/index.php"><i class="fa fa-lock"></i> Admin Portal</a></li>
 				<li class="mobile-auth-cta">
 					<a href="#" data-toggle="modal" data-target="#myModal4" class="btn-mobile-signin">Sign In</a>
