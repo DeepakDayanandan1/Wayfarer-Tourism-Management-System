@@ -36,11 +36,15 @@ if ($dbHost -notmatch '^[A-Za-z0-9.:-]+$') {
     throw 'Use a valid local host name or IP address.'
 }
 
+$dbPort = 0
 $dbPortInput = Read-Host 'MySQL port [3307]'
 if ([string]::IsNullOrWhiteSpace($dbPortInput)) {
     $dbPort = 3307
-} elseif (-not [int]::TryParse($dbPortInput, [ref]$dbPort) -or $dbPort -lt 1 -or $dbPort -gt 65535) {
-    throw 'Enter a MySQL port number between 1 and 65535.'
+} else {
+    $cleanPort = ($dbPortInput -replace '\D', '').Trim()
+    if ([string]::IsNullOrWhiteSpace($cleanPort) -or -not [int]::TryParse($cleanPort, [ref]$dbPort) -or $dbPort -lt 1 -or $dbPort -gt 65535) {
+        throw 'Enter a valid MySQL port number between 1 and 65535 (such as 3307 or 3306).'
+    }
 }
 
 $securePassword = Read-Host "MySQL password for $adminUser" -AsSecureString
@@ -125,14 +129,27 @@ protocol=TCP
         return $outputTask.Result.Trim()
     }
 
-    $tableCount = Invoke-MySql -Sql "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'tms';"
-    if ($tableCount -match '^\d+$' -and [int]$tableCount -gt 0) {
-        throw 'The tms database already contains tables. Back it up and remove or rename it before importing the sample database.'
+    $tableCountRaw = Invoke-MySql -Sql "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'tms';" -Arguments @('-N', '-s')
+    $cleanCount = ($tableCountRaw -replace '\D', '').Trim()
+    $existingCount = 0
+    [void][int]::TryParse($cleanCount, [ref]$existingCount)
+    if ($existingCount -gt 0) {
+        $reimport = Read-Host "The 'tms' database already contains $existingCount tables. Re-import database from scratch? [y/N]"
+        if ($reimport -match '^(y|yes)$') {
+            Write-Output "Dropping and recreating 'tms' database..."
+            [void](Invoke-MySql -Sql "DROP DATABASE IF EXISTS tms; CREATE DATABASE tms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+            $dump = Get-Content -LiteralPath $dumpPath -Raw
+            [void](Invoke-MySql -Sql $dump -Arguments @('tms'))
+            Write-Output "Sample database re-imported."
+        } else {
+            Write-Output "Keeping existing database tables. Updating user permissions and local configuration..."
+        }
+    } else {
+        [void](Invoke-MySql -Sql "CREATE DATABASE IF NOT EXISTS tms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+        $dump = Get-Content -LiteralPath $dumpPath -Raw
+        [void](Invoke-MySql -Sql $dump -Arguments @('tms'))
+        Write-Output "Sample database imported successfully."
     }
-
-    [void](Invoke-MySql -Sql "CREATE DATABASE IF NOT EXISTS tms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
-    $dump = Get-Content -LiteralPath $dumpPath -Raw
-    [void](Invoke-MySql -Sql $dump -Arguments @('tms'))
 
     $quotedPassword = $appPassword.Replace("'", "''")
     $accountSetup = @"

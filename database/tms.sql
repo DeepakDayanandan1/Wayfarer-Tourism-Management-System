@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
     `id` INT(11) NOT NULL,
     `UserName` VARCHAR(100) DEFAULT NULL,
     `Name` VARCHAR(250) DEFAULT NULL,
@@ -54,7 +54,7 @@ VALUES (1, 'admin', 'Administrator', 'test@gmail.com',
 -- Table structure for table `tblbooking`
 --
 
-CREATE TABLE `tblbooking` (
+CREATE TABLE IF NOT EXISTS `tblbooking` (
   `BookingId` int(11) NOT NULL,
   `PackageId` int(11) DEFAULT NULL,
   `UserEmail` varchar(100) DEFAULT NULL,
@@ -82,7 +82,7 @@ INSERT INTO `tblbooking` (`BookingId`, `PackageId`, `UserEmail`, `FromDate`, `To
 -- Table structure for table `tblenquiry`
 --
 
-CREATE TABLE `tblenquiry` (
+CREATE TABLE IF NOT EXISTS `tblenquiry` (
   `id` int(11) NOT NULL,
   `FullName` varchar(100) DEFAULT NULL,
   `EmailId` varchar(100) DEFAULT NULL,
@@ -107,7 +107,7 @@ INSERT INTO `tblenquiry` (`id`, `FullName`, `EmailId`, `MobileNumber`, `Subject`
 -- Table structure for table `tblissues`
 --
 
-CREATE TABLE `tblissues` (
+CREATE TABLE IF NOT EXISTS `tblissues` (
   `id` int(11) NOT NULL,
   `UserEmail` varchar(100) DEFAULT NULL,
   `Issue` varchar(100) DEFAULT NULL,
@@ -131,7 +131,7 @@ INSERT INTO `tblissues` (`id`, `UserEmail`, `Issue`, `Description`, `PostingDate
 -- Table structure for table `tblpages`
 --
 
-CREATE TABLE `tblpages` (
+CREATE TABLE IF NOT EXISTS `tblpages` (
   `id` int(11) NOT NULL,
   `type` varchar(255) DEFAULT '',
   `detail` longtext DEFAULT NULL
@@ -153,7 +153,7 @@ INSERT INTO `tblpages` (`id`, `type`, `detail`) VALUES
 -- Table structure for table `tbltourpackages`
 --
 
-CREATE TABLE `tbltourpackages` (
+CREATE TABLE IF NOT EXISTS `tbltourpackages` (
   `PackageId` int(11) NOT NULL,
   `PackageName` varchar(200) DEFAULT NULL,
   `PackageType` varchar(150) DEFAULT NULL,
@@ -187,7 +187,7 @@ INSERT INTO `tbltourpackages` (`PackageId`, `PackageName`, `PackageType`, `Packa
 -- Table structure for table `tblusers`
 --
 
-CREATE TABLE `tblusers` (
+CREATE TABLE IF NOT EXISTS `tblusers` (
   `id` int(11) NOT NULL,
   `FullName` varchar(100) DEFAULT NULL,
   `MobileNumber` char(10) DEFAULT NULL,
