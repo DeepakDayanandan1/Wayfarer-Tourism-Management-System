@@ -28,6 +28,8 @@ The browser requests a PHP page, which includes shared navigation/layout and dat
 | `admin/` | Admin pages, reports, and package/booking/user management |
 | `css/`, `js/`, `fonts/`, `images/` | Frontend styles, scripts, fonts, and images |
 | `database/tms.sql` | Database schema and sample records |
+| `setup-database.ps1` | Imports the database and configures a dedicated local app account |
+| `start-database.ps1` | Starts a separate, loopback-only MySQL instance without changing the existing MySQL service |
 | `run.ps1` | Starts the local PHP development server on Windows |
 
 ## Run locally on Windows
@@ -35,29 +37,27 @@ The browser requests a PHP page, which includes shared navigation/layout and dat
 ### Requirements
 
 1. PHP 8.2 or newer with the `pdo_mysql` extension enabled. XAMPP's PHP can be used, or install PHP and add `php.exe` to `PATH`.
-2. A running MySQL or MariaDB server.
-3. The MySQL command-line client (`mysql.exe`) to create and initialize the database.
+2. MySQL Server and its `mysql.exe` command-line client. XAMPP's MySQL distribution also works.
 
 ### Initialize the database
 
-Create a fresh database and import the included SQL dump from the repository root:
+Open a PowerShell terminal at the repository root and start a separate local database:
 
 ```powershell
-mysql -u root -p -e "CREATE DATABASE tms CHARACTER SET utf8mb4;"
-cmd /c 'mysql -u root -p tms < database\tms.sql'
+.\start-database.ps1
 ```
 
-Enter the database password when prompted. If the database or tables already exist, back them up before importing; the dump creates tables and includes sample records.
+Keep that terminal open. It starts MySQL on `127.0.0.1:3307` using a separate data directory under your Windows user profile and does not change or reset the existing MySQL service.
 
-The default connection is `127.0.0.1:3306`, database `tms`, user `root`, and an empty password (the common local XAMPP setup). Override these defaults in the PowerShell session before starting the site if your database uses different credentials:
+Open a second PowerShell terminal at the repository root and import the sample database:
 
 ```powershell
-$env:TMS_DB_HOST = "127.0.0.1"
-$env:TMS_DB_PORT = "3306"
-$env:TMS_DB_NAME = "tms"
-$env:TMS_DB_USER = "root"
-$env:TMS_DB_PASS = "your-database-password"
+.\setup-database.ps1
 ```
+
+Press Enter to use the defaults (`root`, `127.0.0.1`, and port `3307`). The separate local database has no root password initially. The setup script imports `database/tms.sql`, creates a dedicated app-only MySQL account with a random password, and saves that account to the ignored `config.local.php` file. If `tms` already contains tables, setup stops to avoid overwriting existing data.
+
+The existing MySQL service on port `3306` is left untouched. To stop the separate database, press Ctrl+C in its terminal. The PHP app uses the saved local configuration; environment variables `TMS_DB_HOST`, `TMS_DB_PORT`, `TMS_DB_NAME`, `TMS_DB_USER`, and `TMS_DB_PASS` can override it.
 
 ### Start the site
 
@@ -69,7 +69,16 @@ From the repository root:
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Use `Ctrl+C` in the server terminal to stop it. The admin area is at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/).
 
-If PowerShell blocks the script, invoke it for the current process with `Set-ExecutionPolicy -Scope Process Bypass`, then run `.\run.ps1` again.
+If PowerShell blocks a script, invoke it for the current process with `Set-ExecutionPolicy -Scope Process Bypass`, then run `.\start-database.ps1`, `.\setup-database.ps1`, and `.\run.ps1` in that order.
+
+### Sample application accounts
+
+The supplied database dump includes these sample application logins:
+
+- **Admin:** username `admin`, password `Test@123` — sign in at `/admin/`.
+- **Customer:** email `test@gmail.com`, password `Test@123` — use the customer sign-in on the home page.
+
+These are website logins, not MySQL credentials. The app can only use them after its database connection succeeds. They are demo credentials from the supplied project; change them before using a non-local deployment.
 
 ## Database model
 

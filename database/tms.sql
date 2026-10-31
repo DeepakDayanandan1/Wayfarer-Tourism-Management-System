@@ -28,21 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `UserName` varchar(100) DEFAULT NULL,
-  `Name` varchar(250) DEFAULT NULL,
-  `EmailId` varchar(250) DEFAULT NULL,
-  `MobileNumber` bigint(10) DEFAULT NULL,
-  `Password` varchar(100) DEFAULT NULL,
-  `updationDate` timestamp NULL DEFAULT NULL
+    `id` INT(11) NOT NULL,
+    `UserName` VARCHAR(100) DEFAULT NULL,
+    `Name` VARCHAR(250) DEFAULT NULL,
+    `EmailId` VARCHAR(250) DEFAULT NULL,
+    `MobileNumber` VARCHAR(10) DEFAULT NULL,
+    `Password` VARCHAR(100) DEFAULT NULL,
+    `updationDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `UserName`, `Name`, `EmailId`, `MobileNumber`, `Password`, `updationDate`) VALUES
-(1, 'admin', 'Administrator', 'test@gmail.com', 7894561239, 'f925916e2754e5e03f75dd58a5733251', '2025-10-09 11:18:49');
+INSERT INTO `admin`
+(`id`, `UserName`, `Name`, `EmailId`, `MobileNumber`, `Password`, `updationDate`)
+VALUES (1, 'admin', 'Administrator', 'test@gmail.com',
+'0000000000', 'pass@123', CURRENT_TIMESTAMP);
 
 -- --------------------------------------------------------
 
