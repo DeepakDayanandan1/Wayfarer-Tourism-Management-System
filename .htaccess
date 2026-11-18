@@ -3,7 +3,7 @@
 
     # Prevent direct access to sensitive configuration and application source files
     RewriteRule ^(\.env|\.git|artisan|composer\.(json|lock)|package\.json|phpunit\.xml) - [F,L,NC]
-    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|legacy_corephp)/ - [F,L,NC]
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests)/ - [F,L,NC]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
