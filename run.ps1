@@ -18,22 +18,11 @@ if ($php) {
     }
 }
 
-$phpModules = & $phpPath -m
-if ($LASTEXITCODE -ne 0) {
-    throw "Unable to start PHP: $phpPath"
-}
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host " Wayfarer Tourism Management System (Laravel 13.x)" -ForegroundColor Green
+Write-Host " Public Website: http://127.0.0.1:8000" -ForegroundColor Yellow
+Write-Host " Admin Portal:   http://127.0.0.1:8000/admin/login" -ForegroundColor Yellow
+Write-Host " Press Ctrl+C to stop the server." -ForegroundColor Gray
+Write-Host "==========================================================" -ForegroundColor Cyan
 
-$phpArguments = @()
-if ($phpModules -notcontains 'pdo_mysql') {
-    $extensionDir = Join-Path (Split-Path $phpPath -Parent) 'ext'
-    if (-not (Test-Path (Join-Path $extensionDir 'php_pdo_mysql.dll'))) {
-        throw 'The pdo_mysql extension is not available. Enable it in php.ini or install PHP with MySQL PDO support.'
-    }
-
-    $phpArguments += @('-d', "extension_dir=$extensionDir", '-d', 'extension=pdo_mysql')
-}
-
-Write-Host "Wayfarer - Tourism Management System is running at http://127.0.0.1:8000" -ForegroundColor Cyan
-Write-Host "Admin Portal is running at http://127.0.0.1:8000/admin/" -ForegroundColor Green
-Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Yellow
-& $phpPath @phpArguments -S 127.0.0.1:8000 -t $PSScriptRoot
+& $phpPath artisan serve --host=127.0.0.1 --port=8000

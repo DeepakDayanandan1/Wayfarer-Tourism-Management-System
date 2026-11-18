@@ -1,35 +1,40 @@
 # Wayfarer — Modern Tourism & Travel Management System
 
+[![Laravel Version](https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-FF2D20?logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP Version](https://img.shields.io/badge/PHP-8.2%20%7C%208.3%20%7C%208.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![Database](https://img.shields.io/badge/Database-MySQL%20%7C%20MariaDB-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Frontend](https://img.shields.io/badge/Frontend-Bootstrap%20%7C%20jQuery%20%7C%20CSS3-563D7C?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![Architecture](https://img.shields.io/badge/Architecture-Server--Rendered%20PDO-green)](https://www.php.net/manual/en/book.pdo.php)
+[![Frontend](https://img.shields.io/badge/Frontend-Blade%20%7C%20Bootstrap%20%7C%20jQuery-563D7C?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Wayfarer** is a robust, full-featured, server-rendered Tourism and Holiday Package Management web application. Built with modern PHP (PDO with parameterized queries) and MySQL, it provides an intuitive public portal for travelers to discover packages and book holidays, alongside a high-density, real-time administrative command center.
+**Wayfarer** is a full-featured, enterprise-grade Tourism and Holiday Package Management web application built with **Laravel**. Designed for travel agencies, tour operators, and holiday travelers, Wayfarer provides an elegant public portal for exploring destinations and booking expeditions, alongside a powerful, real-time administrative command center.
 
-> 📖 **Looking for a complete technical deep-dive?** See [PROJECT_DOCUMENTATION.md](file:///c:/Projects/Wayfarer/PROJECT_DOCUMENTATION.md) for the exhaustive A-to-Z architecture, library inventory, database model, and workflows.
+> 📚 **Complete A-to-Z Technical Documentation Available:**  
+> For an exhaustive, deep-dive architectural reference covering all technical layers, system domain, complete asset inventory, request lifecycles, database dictionaries, security models, and deployment guides, please see [project documentation.txt](file:///c:/Projects/Wayfarer/project%20documentation.txt).
 
 ---
 
 ## 🌟 Key Highlights & Features
 
-### 🌍 Traveler Portal (Public)
-- **Holiday Package Catalog:** Browse curated tour packages with categorized types (Family, Couple, Group), locations, prices, rich descriptions, and photo galleries.
-- **Dynamic Booking Engine:** Real-time date selection with departure and return validation, guest comments, and instant booking submission.
-- **Account & Identity Center:**
-  - Fast traveler registration with AJAX live email availability checking.
-  - Secure sign-in, profile management, and password reset flows.
-- **Tour Booking History:** View past, confirmed, and pending bookings; travelers can cancel upcoming trips with audit-logged timestamps.
-- **Customer Support & Issue Ticketing:** Raise support tickets against bookings or general concerns and track administrative resolutions.
-- **General Inquiries:** Dedicated contact and package inquiry submissions.
+### 🌍 Traveler Portal (Public & Authenticated)
+- **Curated Package Catalog:** Browse holiday packages categorized by travel style (Family, Couples, Adventure), destinations, pricing, amenities, and high-resolution photo galleries.
+- **Dynamic Booking Engine:** Real-time date selection with departure and return validation, custom guest notes, and instant booking confirmations.
+- **Traveler Account & Profile Center:**
+  - Fast registration and secure authentication with real-time email availability validation.
+  - Personalized navigation with initial avatar badges displaying the traveler's initial.
+  - Complete profile management and credential updates.
+- **Tour Booking History:** Review pending, confirmed, and past reservations with self-service cancellation and audit timestamps.
+- **Customer Support & Issue Ticketing:** Raise support tickets against reservations or travel questions and track administrative remarks.
+- **Inquiry Management:** Dedicated inquiry submission form for customized holiday packages.
 
 ### 🛡️ Administrative Command Center (`/admin/`)
-- **Executive KPI Dashboard:** Real-time metrics tracking total users, packages, enquiries (new vs. read), and bookings (confirmed, pending, cancelled).
-- **Tour Package Management:** Full CRUD operations for packages with image uploads, location targeting, pricing in USD, and feature lists.
-- **Booking Fulfillment & Actions:** Review traveler bookings, verify schedules, and confirm or cancel with automated status tracking.
-- **Customer Management:** Searchable directory of registered users with drill-down views into individual travel histories.
-- **Issue Ticket Resolution:** Review raised tickets and submit administrative remarks in dedicated dialogs.
-- **Content Management System (CMS):** In-browser WYSIWYG editor powered by NicEdit to update static informational pages (Terms of Service, Privacy Policy, About Us, Contact Us).
+- **Executive KPI Dashboard:** Real-time business intelligence tracking total travelers, active packages, customer inquiries (new vs. read), and booking statuses (confirmed, pending, cancelled).
+- **Tour Package Management:** Comprehensive CRUD operations for packages, featuring image uploads, destination tagging, pricing, and feature highlights.
+- **Interactive Navigation Submenu:** In-place accordion submenu for **Tour Packages** (`Create` & `Manage`) with active route detection and collapsed sidebar flyout support.
+- **Booking Fulfillment & Actions:** Review reservations, verify travel dates, and confirm or cancel bookings with automated audit logs.
+- **Responsive Data Grids:** Horizontally scrollable tables with custom scrollbars and contained comment boxes preventing layout shifts.
+- **Traveler Directory:** Searchable customer directory with drill-down views into individual traveler booking histories.
+- **Support Ticket Resolution:** Review customer issues and submit administrative resolution remarks in dedicated dialogs.
+- **Content Management System (CMS):** In-browser management for static informational pages (Terms of Use, Privacy Policy, About Us, Contact Us).
 
 ---
 
@@ -37,12 +42,14 @@
 
 | Layer | Technologies & Tools |
 | :--- | :--- |
-| **Backend Runtime** | PHP 8.2+ (CLI built-in web server or Apache/Nginx) |
-| **Database Access** | MySQL 5.7+ / MariaDB 10.4+ via **PHP Data Objects (PDO)** with parameterized queries |
-| **Authentication** | Secure PHP native sessions (`$_SESSION`) with role-based access control |
-| **Public Frontend** | HTML5, CSS3, Bootstrap, Font Awesome icons, jQuery, WOW.js animations |
-| **Admin Frontend** | Responsive dashboard theme, BasicTable (responsive grid tables), NiceScroll, NicEdit WYSIWYG |
-| **Automation** | Windows PowerShell automation scripts (`start-database.ps1`, `setup-database.ps1`, `run.ps1`) |
+| **Framework** | **Laravel 13.x** (PHP 8.4+ compatible) |
+| **Architecture** | **MVC (Model-View-Controller)** pattern with modular Controllers, Eloquent Models, Middleware, and Blade Views |
+| **Database & ORM** | **MySQL 8.x / MariaDB** with **Laravel Eloquent ORM** relationships and query optimization |
+| **Authentication** | Multi-guard authentication architecture (`web` for travelers, `admin` for administrators) |
+| **Password Security** | Bcrypt (rounds: 12) & Argon2 hashing with multi-algorithm verification |
+| **Frontend Engine** | **Blade Templating Engine** with reusable components (`header`, `footer`, `navbar`, `sidebar`, `signin`, `signup`) |
+| **Styling & Assets** | Bootstrap, Font Awesome 4.7 & 6, WOW.js animations, custom CSS Grid layouts |
+| **Build & Tooling** | Composer, Artisan CLI, PowerShell automation (`run.ps1`) |
 
 ---
 
@@ -50,155 +57,246 @@
 
 ```plaintext
 Wayfarer/
-├── admin/                     # Administrative command center
-│   ├── css/                   # Admin styles & BasicTable responsive layout
-│   ├── fonts/                 # Font Awesome & Glyphicon icon fonts
-│   ├── images/                # Admin branding & UI icons
-│   ├── includes/              # Shared admin header, sidebar navigation, footer, config
-│   ├── js/                    # Bootstrap JS, jQuery, NiceScroll, BasicTable
-│   ├── pacakgeimages/         # Uploaded tour package photos (referenced by DB)
-│   ├── create-package.php     # Package creation form with file upload
-│   ├── dashboard.php          # Real-time metrics & KPI summary cards
-│   ├── manage-bookings.php    # Booking approval, cancellation & audit
-│   ├── manage-enquires.php    # Customer inquiry review
-│   ├── manage-packages.php    # Package catalog management
-│   ├── manage-pages.php       # Static content CMS (Terms, Privacy, About)
-│   ├── manage-users.php       # User directory & profile audits
-│   ├── manageissues.php       # Support ticket queue
-│   ├── updateissue.php        # Ticket remark dialog
-│   └── index.php              # Modern administrative login portal
-├── css/                       # Public CSS (Bootstrap, WOW animations, custom styles)
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/
+│   │   │   │   ├── AuthController.php        # Admin login, logout, password recovery
+│   │   │   │   ├── BookingController.php     # Booking fulfillment, confirmation, cancellation
+│   │   │   │   ├── DashboardController.php   # Real-time metrics & KPI summary cards
+│   │   │   │   ├── EnquiryController.php     # Customer inquiry review & status
+│   │   │   │   ├── IssueController.php       # Support ticket queue & remarks
+│   │   │   │   ├── PackageController.php     # Tour packages CRUD & image processing
+│   │   │   │   ├── PageController.php        # CMS static pages management
+│   │   │   │   ├── ProfileController.php     # Admin profile & security settings
+│   │   │   │   └── UserController.php        # Customer directory & booking audits
+│   │   │   ├── Auth/
+│   │   │   │   ├── LoginController.php       # Traveler authentication & session management
+│   │   │   │   ├── PasswordController.php    # Traveler password recovery
+│   │   │   │   └── RegisterController.php    # Traveler account registration
+│   │   │   ├── BookingController.php         # Public booking submission & tour history
+│   │   │   ├── EnquiryController.php         # Public travel inquiries
+│   │   │   ├── HomeController.php            # Homepage with featured packages
+│   │   │   ├── IssueController.php           # Traveler support tickets
+│   │   │   ├── PageController.php            # Public CMS page views
+│   │   │   ├── ProfileController.php         # Traveler profile & password management
+│   │   │   └── TourPackageController.php     # Package catalog & detail views
+│   │   └── Middleware/
+│   │       ├── AuthenticateAdmin.php         # Admin authentication guard
+│   │       └── RedirectIfAdmin.php           # Admin guest redirection
+│   └── Models/
+│       ├── Admin.php                         # Administrator authenticatable model
+│       ├── Booking.php                       # Tour reservation model & relationships
+│       ├── Enquiry.php                       # Travel inquiry model
+│       ├── Issue.php                         # Support ticket model & relationships
+│       ├── Page.php                          # CMS content page model
+│       ├── TourPackage.php                   # Tour package catalog model
+│       └── User.php                          # Traveler authenticatable model & relationships
+├── bootstrap/
+│   ├── app.php                               # Application configuration & middleware bindings
+│   └── providers.php                         # Service providers registry
+├── config/
+│   ├── auth.php                              # Multi-guard authentication configuration
+│   ├── database.php                          # Database connection settings
+│   └── hashing.php                           # Hashing driver & algorithm options
 ├── database/
-│   └── tms.sql                # Complete schema DDL & initial seed records
-├── fonts/                     # Public webfonts
-├── images/                    # Hero banners and background assets
-├── includes/                  # Public shared components (header, footer, modals)
-│   ├── config.php             # Unified database PDO connector
-│   ├── signin.php             # Traveler login modal
-│   ├── signup.php             # Traveler registration modal
-│   └── write-us.php           # Support ticket submission modal
-├── js/                        # Public JS (jQuery, Bootstrap, WOW.js)
-├── change-password.php        # Traveler password update
-├── check_availability.php     # AJAX live email verification endpoint
-├── enquiry.php                # Public general enquiry page
-├── forgot-password.php        # Traveler password recovery
-├── index.php                  # Public landing page with featured packages
-├── issuetickets.php           # Traveler support ticket history & status
-├── logout.php                 # Traveler session termination
-├── package-details.php        # Package overview and booking submission form
-├── package-list.php           # Full tour package browsing catalog
-├── page.php                   # CMS page renderer (About, Terms, Privacy)
-├── profile.php                # Traveler profile management
-├── run.ps1                    # PowerShell script to start PHP development server
-├── setup-database.ps1         # PowerShell script to provision database & credentials
-├── start-database.ps1         # PowerShell script to run isolated loopback MySQL instance
-├── thankyou.php               # Booking confirmation receipt
-├── tour-history.php           # Traveler booking history & self-service cancellation
-├── PROJECT_DOCUMENTATION.md   # Exhaustive A-to-Z technical architecture guide
-└── README.md                  # Project overview & quick start
+│   ├── migrations/                           # Database schema migrations
+│   └── tms.sql                               # Database schema & sample seed data
+├── public/
+│   ├── admin/                                # Admin CSS, JS, fonts, and assets
+│   ├── css/                                  # Public stylesheets (style.css, bootstrap.css, animate.css)
+│   ├── fonts/                                # Font Awesome & Glyphicon icon fonts
+│   ├── images/                               # Hero banners and background assets
+│   ├── js/                                   # Public JavaScript libraries
+│   ├── pacakgeimages/                        # Holiday package photo gallery storage
+│   └── index.php                             # Front controller
+├── resources/
+│   └── views/
+│       ├── admin/                            # Admin Blade templates (dashboard, packages, bookings, etc.)
+│       ├── auth/                             # Authentication views (login, register, forgot-password)
+│       ├── bookings/                         # Booking management views (history, thankyou)
+│       ├── components/                       # Reusable Blade components (header, footer, sidebar, modals)
+│       ├── enquiries/                        # Inquiry submission views
+│       ├── issues/                           # Customer support ticket views
+│       ├── layouts/                          # Master layouts (app.blade.php, admin.blade.php)
+│       ├── packages/                         # Tour package catalog & show views
+│       ├── pages/                            # Dynamic CMS content views
+│       └── profile/                          # User profile & credential views
+├── routes/
+│   ├── console.php                           # Artisan console commands
+│   └── web.php                               # Web route definitions (Public, Auth, Admin)
+├── .env                                      # Environment configuration file
+├── artisan                                   # Laravel Artisan CLI
+├── composer.json                             # Composer dependencies & metadata
+├── project documentation.txt                 # Exhaustive A-to-Z technical architecture & specs
+└── run.ps1                                   # PowerShell quick-start launcher script
 ```
 
 ---
 
-## 🚀 Quick Start Guide (Windows)
+## 📖 Complete Technical Documentation (A to Z)
+
+An exhaustive, in-depth technical manual is provided in [`project documentation.txt`](file:///c:/Projects/Wayfarer/project%20documentation.txt). It includes:
+
+1. **System Domain & Personas:** Detailed breakdown of traveler vs. administrative operational roles.
+2. **Complete Technology Stack Inventory:** Exact versions, PHP extensions, Laravel ecosystem components, and database requirements.
+3. **Frontend & Asset Directory:** In-depth breakdown of Bootstrap 3/5 components, jQuery plugins, FontAwesome, and custom styling.
+4. **MVC Architecture & Request Lifecycle:** Step-by-step tracing from entry point (`public/index.php`) through HTTP Kernels, middleware pipelines, route dispatchers, controllers, Eloquent models, and Blade view rendering.
+5. **Database Schema & Data Dictionary:** Comprehensive column-by-column breakdown of all 7 relational tables, primary/foreign key mappings, and Eloquent relationships.
+6. **Module-by-Module Functional Deep Dive:**
+   - Traveler Authentication & Single-Character Initial Avatar Badges
+   - Tour Package Catalog, Gallery, & Booking Validation Engine
+   - Traveler Booking History & Self-Service Cancellation Auditing
+   - Customer Support & Ticketing Lifecycle
+   - Lead Inquiries & Traveler Engagement
+   - Real-Time Executive KPI Dashboard
+   - Tour Package CRUD & Interactive Submenu (`Create` / `Manage`)
+   - Booking Fulfillment & Responsive Data Grids
+   - Traveler Directory & Drill-Down Audits
+   - In-Browser Static Content Management (CMS)
+7. **Complete Routing & Middleware Directory:** Method, URI, name, controller action, and middleware list for every endpoint.
+8. **Security & Hardening:** Multi-guard session separation, CSRF protection, SQL injection prevention, XSS escaping, and multi-tier cryptographic password hashing (Bcrypt & Argon2).
+9. **File-by-File Codebase Map:** Comprehensive index of application files and their purposes.
+10. **Local Setup & PowerShell Automation:** Step-by-step developer setup and `run.ps1` execution.
+11. **System Test Credentials & Quick Reference Guide.**
+
+---
+
+## 🚀 Quick Start Guide
 
 ### Prerequisites
-1. **PHP 8.2 or newer** installed and available in your `PATH` (with `pdo_mysql` extension enabled).
-2. **MySQL Server 5.7+ or MariaDB 10.4+** (XAMPP's MySQL or standalone MySQL).
+1. **PHP 8.2 or newer** installed and available in your `PATH` (with `pdo_mysql`, `mbstring`, `openssl`, `curl` extensions enabled).
+2. **Composer** installed globally.
+3. **MySQL Server 5.7+ or MariaDB 10.4+** (running on `127.0.0.1:3306`).
 
 ---
 
-### Method A: Automated One-Click Setup (Recommended)
+### Installation & Setup
 
-1. **Start the Database Instance:**
-   Open a PowerShell terminal at the project root:
-   ```powershell
-   .\start-database.ps1
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/Wayfarer.git
+   cd Wayfarer
    ```
-   *This starts an isolated MySQL instance on port `3307` without modifying your default service.*
 
-2. **Initialize Schema & Create Database Account:**
-   Open a second PowerShell terminal at the project root:
-   ```powershell
-   .\setup-database.ps1
+2. **Install Composer Dependencies:**
+   ```bash
+   composer install
    ```
-   *Press Enter to accept defaults (`root`, `127.0.0.1`, port `3307`). The script imports `database/tms.sql`, generates a dedicated application account with a secure password, and creates the local `config.local.php` file.*
 
-3. **Launch the Web Application:**
-   From the repository root:
-   ```powershell
-   .\run.ps1
+3. **Configure Environment:**
+   Copy `.env.example` to `.env` (if not already present):
+   ```bash
+   cp .env.example .env
    ```
-   Open your browser to:
-   - **Public Website:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
-   - **Admin Command Center:** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+   Set your local database credentials in `.env`:
+   ```dotenv
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=tms
+   DB_USERNAME=root
+   DB_PASSWORD=your_mysql_password
+   ```
 
----
-
-### Method B: Manual Configuration (XAMPP / Standard MySQL)
-
-1. Start Apache and MySQL from your XAMPP Control Panel (or start your local MySQL service on port `3306`).
-2. Open **phpMyAdmin** or your MySQL CLI and create a database:
+4. **Initialize Database:**
+   Create the database in MySQL:
    ```sql
    CREATE DATABASE tms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
    ```
-3. Import `database/tms.sql` into the newly created `tms` database.
-4. Create a `config.local.php` file in the project root (or set environment variables):
-   ```php
-   <?php
-   return [
-       'host' => '127.0.0.1',
-       'port' => 3306,
-       'name' => 'tms',
-       'user' => 'root',
-       'pass' => '',
-   ];
-   ```
-5. Start the development server:
+   Import the schema and initial seed data:
    ```bash
-   php -S 127.0.0.1:8000
+   mysql -u root -p tms < database/tms.sql
    ```
+
+5. **Generate Application Encryption Key:**
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Start the Development Server:**
+   Using the included PowerShell script (Windows):
+   ```powershell
+   .\run.ps1
+   ```
+   Or using the standard Artisan CLI:
+   ```bash
+   php artisan serve --host=127.0.0.1 --port=8000
+   ```
+
+7. **Access the Portals:**
+   - **Public Website:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+   - **Admin Portal:** [http://127.0.0.1:8000/admin/login](http://127.0.0.1:8000/admin/login)
 
 ---
 
 ## 🔑 Default Test Credentials
 
-The database dump includes pre-configured sample credentials for testing:
+Pre-configured sample accounts are available for testing:
 
 | Role | Username / Email | Password | Portal URL |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `admin` | `Test@123` *(or `pass@123`)* | `/admin/` |
-| **Customer (Traveler)** | `test@gmail.com` | `Test@123` | `/index.php` (Sign In modal) |
-
-> ⚠️ *Note: These are sample application accounts stored in the application database, separate from your MySQL root user. For production deployments, change these passwords immediately.*
+| **Administrator** | `admin` *(or `test@gmail.com`)* | `pass@123` | [Admin Login](/admin/login) |
+| **Traveler** | `test@gmail.com` | `Test@123` | [Traveler Sign In](/login) |
 
 ---
 
-## 🗄️ Database Schema Summary
+## 🗄️ Database Schema & Eloquent Mapping
 
-The core data store (`tms`) contains 7 primary relational tables:
+The database (`tms`) architecture comprises 7 relational entities mapped to Eloquent models:
 
-| Table Name | Primary Key | Description |
-| :--- | :--- | :--- |
-| **`admin`** | `id` | Administrator account credentials and mobile contact |
-| **`tblusers`** | `id` | Registered travelers (Full Name, Mobile Number, Email, Password) |
-| **`tbltourpackages`**| `PackageId` | Tour packages (Name, Type, Location, Price, Features, Details, Image) |
-| **`tblbooking`** | `BookingId` | Package reservations, guest dates, status (Pending, Confirmed, Cancelled), cancellation audit |
-| **`tblenquiry`** | `id` | Public traveler inquiries with read/unread status |
-| **`tblissues`** | `id` | Traveler support tickets, issue description, and administrator remarks |
-| **`tblpages`** | `id` | CMS-editable pages (`terms`, `privacy`, `aboutus`, `contact`) |
+| Table Name | Eloquent Model | Primary Key | Description |
+| :--- | :--- | :--- | :--- |
+| **`admin`** | `App\Models\Admin` | `id` | Administrator credentials, contact info, and role permissions |
+| **`tblusers`** | `App\Models\User` | `id` | Registered travelers (FullName, MobileNumber, EmailId, Password) |
+| **`tbltourpackages`** | `App\Models\TourPackage` | `PackageId` | Holiday packages (Name, Type, Location, Price, Details, Image) |
+| **`tblbooking`** | `App\Models\Booking` | `BookingId` | Package reservations, guest dates, approval status, and audit timestamps |
+| **`tblenquiry`** | `App\Models\Enquiry` | `id` | Customer trip inquiries with read/unread statuses |
+| **`tblissues`** | `App\Models\Issue` | `id` | Customer support tickets and administrative remarks |
+| **`tblpages`** | `App\Models\Page` | `id` | Dynamic CMS pages (`aboutus`, `contact`, `terms`, `privacy`) |
+
+---
+
+## 🛣️ Route Architecture
+
+### Public & Traveler Routes
+- `GET  /` &rarr; Homepage featuring hero banner & highlighted tour packages
+- `GET  /packages` &rarr; Tour package catalog with destination filters
+- `GET  /packages/{id}` &rarr; Tour package details & date booking form
+- `POST /packages/{id}/book` &rarr; Booking reservation submission
+- `GET  /thank-you` &rarr; Reservation confirmation receipt
+- `GET  /tour-history` &rarr; Authenticated traveler booking history
+- `POST /tour-history/{id}/cancel` &rarr; Self-service reservation cancellation
+- `GET  /enquiry` &rarr; Custom holiday package inquiry form
+- `GET  /issues` &rarr; Support ticket management & creation
+- `GET  /profile` &rarr; Traveler account & contact preferences
+- `GET  /page/{type}` &rarr; Static CMS pages (aboutus, contact, privacy, terms)
+- `GET  /login` &rarr; Traveler sign-in page
+- `POST /login` &rarr; Authenticate traveler
+- `GET/POST /logout` &rarr; Terminate traveler session
+- `GET  /register` &rarr; Traveler account registration
+
+### Admin Portal Routes (`/admin/`)
+- `GET  /admin/login` &rarr; Administrator authentication page
+- `POST /admin/login` &rarr; Process administrator login
+- `GET/POST /admin/logout` &rarr; Terminate administrator session
+- `GET  /admin/dashboard` &rarr; Real-time KPI statistics dashboard
+- `GET  /admin/packages` &rarr; Tour packages directory
+- `GET  /admin/packages/create` &rarr; Create new tour package
+- `GET  /admin/bookings` &rarr; Traveler reservations fulfillment
+- `POST /admin/bookings/{id}/confirm` &rarr; Confirm traveler reservation
+- `POST /admin/bookings/{id}/cancel` &rarr; Cancel traveler reservation
+- `GET  /admin/users` &rarr; Registered travelers directory
+- `GET  /admin/enquiries` &rarr; Manage customer inquiries
+- `GET  /admin/issues` &rarr; Review and resolve support tickets
+- `GET  /admin/pages` &rarr; Update CMS pages content
 
 ---
 
 ## 🔒 Security & Best Practices
 
-- **Parameterized Queries:** All database operations utilize PDO prepared statements with explicit parameter binding (`bindParam` / `execute`) to safeguard against SQL injection.
-- **Environment Separation:** Database credentials are kept out of source control using `config.local.php` (ignored in `.gitignore`) and can be dynamically overridden via `TMS_DB_*` environment variables.
-- **Session Authentication:** Role-based session separation protects admin operations (`$_SESSION['alogin']`) and customer operations (`$_SESSION['login']`).
-- **Production Checklist:** When deploying to production:
-  1. Upgrade legacy MD5 password hashes to `password_hash()` and `password_verify()` with Argon2id or Bcrypt.
-  2. Implement CSRF tokens for all POST submissions.
-  3. Serve over HTTPS with HTTP-only, secure session cookie flags.
-  4. Restrict file uploads in `admin/create-package.php` to validated MIME types (`image/jpeg`, `image/png`, `image/webp`).
-
-
+- **CSRF Protection:** All state-changing POST requests are protected by Laravel's CSRF token verification (`@csrf`).
+- **SQL Injection Prevention:** All database operations utilize Eloquent ORM and PDO prepared statements with strict parameter binding.
+- **Multi-Guard Separation:** Independent session isolation between travelers (`web`) and administrators (`admin`) prevents privilege escalation.
+- **Input Sanitization & Validation:** Comprehensive server-side validation rules enforce data integrity across all forms.
+- **XSS Prevention:** Blade templates automatically escape output (`{{ ... }}`) to prevent cross-site scripting attacks.

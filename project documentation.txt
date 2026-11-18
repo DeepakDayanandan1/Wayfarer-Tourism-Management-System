@@ -1,0 +1,551 @@
+================================================================================
+WAYFARER — COMPLETE ARCHITECTURAL & TECHNICAL SPECIFICATION (A TO Z)
+Modern Tourism & Travel Management System (Laravel Edition)
+================================================================================
+
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1.  PROJECT OVERVIEW & SYSTEM DOMAIN
+2.  COMPLETE TECHNOLOGY STACK INVENTORY
+3.  FULL ASSET & LIBRARY INVENTORY
+4.  MVC ARCHITECTURE & REQUEST LIFECYCLE
+5.  DATABASE SCHEMA, DICTIONARY & ELOQUENT MODELS
+6.  MODULE-BY-MODULE FUNCTIONAL WALKTHROUGH
+    6.1 Traveler Authentication & Identity Management
+    6.2 Tour Package Catalog & Booking Engine
+    6.3 Booking History & Cancellation Auditing
+    6.4 Customer Support & Issue Ticketing
+    6.5 Trip Inquiries & Lead Management
+    6.6 Administrator KPI Dashboard
+    6.7 Admin Package Catalog Management & Submenu
+    6.8 Admin Booking Fulfillment & Audit Trail
+    6.9 User Management Directory & History Drilldown
+    6.10 Static Content Management System (CMS)
+7.  COMPLETE ROUTING DIRECTORY (WEB & CONSOLE)
+8.  SECURITY, AUTHENTICATION & HARDENING ARCHITECTURE
+9.  PROJECT FILE-BY-FILE CODEBASE MAP
+10. LOCAL SETUP, POWERSHELL RUNNER & DEPLOYMENT
+11. SYSTEM CREDENTIALS & QUICK REFERENCE GUIDE
+================================================================================
+
+
+================================================================================
+1. PROJECT OVERVIEW & SYSTEM DOMAIN
+================================================================================
+Wayfarer is an enterprise-grade, monolithic Tourism and Holiday Package Management
+web platform engineered on the Laravel framework. Designed for travel agencies,
+destination management companies (DMCs), and modern holidaymakers, Wayfarer
+bridges traveler customer self-service with centralized operational administration.
+
+The application serves two distinct user personas through isolated guards:
+1. Travelers (Public & Authenticated Customers):
+   - Browse holiday packages by type (Family, Couples, Adventure), location, and budget.
+   - Select departure and return dates with dynamic calendar validation.
+   - Submit real-time reservations and receive instant confirmation vouchers.
+   - Manage profiles with a custom initial avatar pill interface.
+   - Track active, confirmed, and historical bookings with cancellation capabilities.
+   - Raise support issue tickets and submit custom tour requests.
+2. Operations Administrators (Command Center):
+   - Monitor real-time KPIs and business intelligence via a central dashboard.
+   - Manage the package inventory (CRUD, image uploads, price structures, location tags).
+   - Review and fulfill reservations (Confirm, Cancel, and Audit).
+   - Resolve customer support tickets with administrative remark logs.
+   - Audit customer histories across registered traveler profiles.
+   - Edit live informational pages (Terms, Privacy, About, Contact) via CMS.
+
+
+================================================================================
+2. COMPLETE TECHNOLOGY STACK INVENTORY
+================================================================================
+
++------------------------------------------------------------------------------+
+|                             PRESENTATION LAYER                               |
+|   HTML5 * CSS3 * Bootstrap 3.3.6 & 5 UI * Blade Templating Engine            |
+|   Font Awesome 4.7 & 6.x * WOW.js (Animate.css) * BasicTable (Responsive)    |
+|   Google Fonts (Playfair Display, Plus Jakarta Sans, Roboto, Montserrat)     |
++------------------------------------------------------------------------------+
+                                      |
+                                      v
++------------------------------------------------------------------------------+
+|                             APPLICATION LAYER                                |
+|                        PHP 8.2+ / PHP 8.4 Compatible                         |
+|                         Laravel Framework 13.x                               |
+|   - Multi-Guard Authentication ('web' for users, 'admin' for operators)      |
+|   - Multi-Tier Hash Verifier (Bcrypt 12 rounds, Argon2, Auto-Upgrades)       |
+|   - Middleware Pipeline (CSRF, EncryptCookies, SubstituteBindings, Auth)     |
+|   - Session Engine (File Driver, Token Rotation, CSRF Protection)            |
+|   - Eloquent Object-Relational Mapping (ORM) with Eager Loading              |
++------------------------------------------------------------------------------+
+                                      |
+                                      v
++------------------------------------------------------------------------------+
+|                                DATA LAYER                                    |
+|                        MySQL 8.x / MariaDB 10.4+                             |
+|   - Database Engine: InnoDB (Transactions, Foreign Constraints, Row-Locks)   |
+|   - Character Set & Collation: utf8mb4 / utf8mb4_unicode_ci                  |
+|   - Parameterized PDO Queries via Eloquent & Query Builder                   |
++------------------------------------------------------------------------------+
+
+DETAILED COMPONENT SPECIFICATIONS:
+--------------------------------------------------------------------------------
+- Framework: Laravel 13.x (PSR-4 autoloading, service providers, service container)
+- Runtime: PHP 8.2 / 8.3 / 8.4 (Zend Engine, OPcache recommended)
+- Web Server Compatibility: Built-in PHP CLI Server, Apache (mod_rewrite / .htaccess),
+  Nginx (fastcgi_pass PHP-FPM), Microsoft IIS
+- Database Engine: MySQL 5.7+ / 8.0+ or MariaDB 10.4+
+- Object Relational Mapper: Laravel Eloquent ORM
+- Template Engine: Laravel Blade Engine
+- CSS Frameworks: Bootstrap 3.3.6 & Bootstrap 5 components, Animate.css
+- JavaScript Libraries: jQuery 2.1.4 & 1.12.0, WOW.js, BasicTable, NiceScroll
+
+
+================================================================================
+3. FULL ASSET & LIBRARY INVENTORY
+================================================================================
+Frontend Stylesheets & Asset Files:
+1. css/bootstrap.css / admin/css/bootstrap.min.css:
+   Grid layouts, button classes, modal dialogs, and utility responsive containers.
+2. css/font-awesome.css / css/font-awesome.min.css:
+   Vector icon set for UI indicators, navigation, markers, and buttons.
+3. css/animate.css:
+   CSS keyframe animations utilized by WOW.js on scroll interactions.
+4. css/style.css:
+   Master public stylesheet containing luxury card UI, floating glassmorphism navbar,
+   holiday package grids, initial avatar circle pills, and responsive layout rules.
+5. admin/css/style.css:
+   Administrative dark-forest theme (#15362f / #102d27), in-place package accordion
+   submenu, KPI metric cards, and responsive table styling.
+6. admin/css/table-style.css & admin/css/basictable.css:
+   Responsive table layout transformation rules and horizontal scrolling controls.
+
+Frontend JavaScript Dependencies:
+1. js/jquery-1.12.0.min.js & admin/js/jquery-2.1.4.min.js:
+   DOM manipulation, event delegation, AJAX email checks, modal management.
+2. js/bootstrap.min.js & admin/js/bootstrap.min.js:
+   Bootstrap modal dialogs, alert dismissals, collapse components, and tooltips.
+3. js/wow.min.js:
+   Lightweight viewport animation trigger library activating Animate.css classes.
+4. admin/js/jquery.basictable.min.js:
+   Responsive table reorganization plugin for small-screen admin layouts.
+5. admin/js/jquery.nicescroll.js:
+   Smooth-scrolling engine for administrative sidebars and cards.
+
+
+================================================================================
+4. MVC ARCHITECTURE & REQUEST LIFECYCLE
+================================================================================
+Wayfarer adheres to the standard Model-View-Controller architecture:
+
+1. Entry Point:
+   Every HTTP request enters via public/index.php.
+2. Application Bootstrap:
+   bootstrap/app.php initializes the application container, registers global
+   middleware (EncryptCookies, StartSession, ShareErrorsFromSession,
+   PreventRequestForgery, SubstituteBindings), and binds routing definitions.
+3. Route Matching (routes/web.php):
+   - Requests without /admin/ prefix match public traveler routes.
+   - Requests with /admin/ prefix route into the admin group with prefix('admin').
+4. Middleware Gateways:
+   - 'guest.admin': Redirects authenticated administrators away from /admin/login.
+   - 'admin': Enforces Auth::guard('admin')->check(), redirecting unauthorized
+     requests to route('admin.login').
+   - 'auth': Protects traveler accounts (/profile, /tour-history, /change-password).
+5. Controller Execution:
+   The controller handles domain logic, validates input data, communicates with
+   Eloquent models, and passes data to Blade views.
+6. View Rendering:
+   Blade compiles templates into cached PHP files in storage/framework/views/.
+   The compiled HTML is streamed back to the client as an HTTP response.
+
+
+================================================================================
+5. DATABASE SCHEMA, DICTIONARY & ELOQUENT MODELS
+================================================================================
+The application database contains 7 primary relational tables:
+
+1. TABLE: `admin` (Eloquent Model: `App\Models\Admin`)
+   Stores administrative staff credentials and contact information.
+   - `id`: int(11) AUTO_INCREMENT, Primary Key
+   - `UserName`: varchar(100), Administrator login handle (e.g., 'admin')
+   - `Name`: varchar(150), Full legal name of administrator
+   - `EmailId`: varchar(100), Administrator email (supports login)
+   - `MobileNumber`: char(10), 10-digit mobile phone number
+   - `Password`: varchar(255), Hashed authentication credential (Bcrypt)
+   - `updationDate`: timestamp ON UPDATE current_timestamp()
+
+2. TABLE: `tblusers` (Eloquent Model: `App\Models\User`)
+   Stores registered traveler customer accounts.
+   - `id`: int(11) AUTO_INCREMENT, Primary Key
+   - `FullName`: varchar(100), Full name of traveler
+   - `MobileNumber`: char(10), 10-digit primary mobile contact
+   - `EmailId`: varchar(70), Unique email identifier & login username
+   - `Password`: varchar(255), Hashed authentication credential (Bcrypt)
+   - `RegDate`: timestamp DEFAULT current_timestamp(), Registration date
+   - `UpdationDate`: timestamp ON UPDATE current_timestamp()
+   Relationships:
+   - hasMany Booking (`UserEmail` -> `EmailId`)
+   - hasMany Issue (`UserEmail` -> `EmailId`)
+
+3. TABLE: `tbltourpackages` (Eloquent Model: `App\Models\TourPackage`)
+   Stores the tour package catalog, itineraries, and price structures.
+   - `PackageId`: int(11) AUTO_INCREMENT, Primary Key
+   - `PackageName`: varchar(200), Package title (e.g., 'Kerala Backwaters Tour')
+   - `PackageType`: varchar(100), Category ('Family', 'Couples', 'Adventure')
+   - `PackageLocation`: varchar(100), Geographical destination
+   - `PackagePrice`: decimal(10,2), Base package rate per person
+   - `PackageFetures`: varchar(255), Comma-separated package inclusions
+   - `PackageDetails`: mediumtext, Comprehensive day-by-day itinerary & details
+   - `PackageImage`: varchar(255), Relative path or filename in public/pacakgeimages/
+   - `Creationdate`: timestamp DEFAULT current_timestamp()
+   - `UpdationDate`: timestamp ON UPDATE current_timestamp()
+   Relationships:
+   - hasMany Booking (`PackageId` -> `PackageId`)
+
+4. TABLE: `tblbooking` (Eloquent Model: `App\Models\Booking`)
+   Stores holiday reservations created by travelers.
+   - `BookingId`: int(11) AUTO_INCREMENT, Primary Key
+   - `PackageId`: int(11), Foreign reference to `tbltourpackages.PackageId`
+   - `UserEmail`: varchar(100), Traveler email reference
+   - `FromDate`: varchar(100), Departure date (YYYY-MM-DD)
+   - `ToDate`: varchar(100), Return date (YYYY-MM-DD)
+   - `Comment`: mediumtext, Traveler special requests, passenger counts, notes
+   - `RegDate`: timestamp DEFAULT current_timestamp(), Booking submission time
+   - `status`: int(11), State machine: 0 = Pending, 1 = Confirmed, 2 = Cancelled
+   - `CancelledBy`: varchar(5), 'u' (Cancelled by User) or 'a' (by Admin)
+   - `UpdationDate`: timestamp ON UPDATE current_timestamp()
+   Relationships:
+   - belongsTo TourPackage (`PackageId` -> `PackageId`)
+   - belongsTo User (`UserEmail` -> `EmailId`)
+
+5. TABLE: `tblenquiry` (Eloquent Model: `App\Models\Enquiry`)
+   Stores public contact submissions and custom vacation inquiries.
+   - `id`: int(11) AUTO_INCREMENT, Primary Key
+   - `FullName`: varchar(100), Traveler contact name
+   - `EmailId`: varchar(100), Contact email address
+   - `MobileNumber`: char(10), Contact phone number
+   - `Subject`: varchar(150), Inquiry subject line
+   - `Description`: mediumtext, Detailed message or custom travel request
+   - `PostingDate`: timestamp DEFAULT current_timestamp()
+   - `Status`: int(1), Read/Unread flag: 0/NULL = Unread, 1 = Read
+
+6. TABLE: `tblissues` (Eloquent Model: `App\Models\Issue`)
+   Stores customer service tickets raised by travelers.
+   - `id`: int(11) AUTO_INCREMENT, Primary Key
+   - `UserEmail`: varchar(100), Submitting traveler's account email
+   - `Issue`: varchar(100), Category ('Booking Issues', 'Cancellation', 'Refund')
+   - `Description`: mediumtext, Detailed description of problem
+   - `PostingDate`: timestamp DEFAULT current_timestamp()
+   - `AdminRemark`: mediumtext, Official administrative resolution note
+   - `AdminremarkDate`: timestamp, Timestamp of administrator remark
+   Relationships:
+   - belongsTo User (`UserEmail` -> `EmailId`)
+
+7. TABLE: `tblpages` (Eloquent Model: `App\Models\Page`)
+   Stores static content managed via the administrative CMS.
+   - `id`: int(11) AUTO_INCREMENT, Primary Key
+   - `type`: varchar(50), Unique slug ('terms', 'privacy', 'aboutus', 'contact')
+   - `detail`: longtext, HTML content rendered on public CMS pages
+
+
+================================================================================
+6. MODULE-BY-MODULE FUNCTIONAL WALKTHROUGH
+================================================================================
+
+6.1 Traveler Authentication & Identity Management
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Auth\LoginController`, `RegisterController`
+- Views: `resources/views/auth/login.blade.php`, `register.blade.php`,
+  `components/signin.blade.php`, `components/signup.blade.php`
+- Description: Travelers authenticate via dedicated pages or modal overlays.
+  - Registration includes real-time email uniqueness checks via `/check-email`.
+  - Passwords are encrypted with Bcrypt (12 cost rounds).
+  - Navigation renders a circular initial avatar (`M`, `D`, etc.) derived from
+    `Auth::user()->FullName` (or `EmailId` fallback) rather than overflowing the bar.
+  - Dropdown menu grants access to Profile, Booking History, and Tickets.
+
+6.2 Tour Package Catalog & Booking Engine
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\TourPackageController`, `BookingController`
+- Views: `resources/views/packages/index.blade.php`, `packages/show.blade.php`
+- Description: Public catalog with destination search, type filtering, and rich
+  itineraries. On the package detail page, authenticated travelers select From/To
+  dates, add passenger comments, and submit reservations directly into `tblbooking`.
+
+6.3 Booking History & Cancellation Auditing
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\BookingController@history`, `@cancel`
+- Views: `resources/views/bookings/history.blade.php`
+- Description: Travelers view all reservations with colored status badges:
+  - Pending (Yellow / 0)
+  - Confirmed (Green / 1)
+  - Cancelled (Red / 2) with timestamp and actor attribution ('Cancelled by you').
+  - Travelers can self-cancel active reservations with confirmation alerts.
+
+6.4 Customer Support & Issue Ticketing
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\IssueController`
+- Views: `resources/views/issues/index.blade.php`, `components/write-us.blade.php`
+- Description: Allows travelers to create support tickets categorized by topic.
+  The ticket dashboard displays submission dates, issue details, and administrative
+  resolutions as soon as administrators post remarks.
+
+6.5 Trip Inquiries & Lead Management
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\EnquiryController`
+- Views: `resources/views/enquiries/index.blade.php`
+- Description: Collects inquiries for custom travel itineraries, group discounts,
+  or corporate retreats. Automatically populates contact fields for signed-in users.
+
+6.6 Administrator KPI Dashboard
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Admin\DashboardController`
+- Views: `resources/views/admin/dashboard.blade.php`
+- Description: High-density command center calculating live metrics:
+  - Total Registered Travelers (`tblusers` count)
+  - Active Tour Packages (`tbltourpackages` count)
+  - Total Reservations (`tblbooking` count: Pending, Confirmed, Cancelled)
+  - Inquiries & Support Tickets (`tblenquiry`, `tblissues`)
+  - Recent reservations and inquiries quick-action tables.
+
+6.7 Admin Package Catalog Management & Submenu
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Admin\PackageController`
+- Views: `resources/views/admin/packages/index.blade.php`, `create.blade.php`, `edit.blade.php`
+- Description: Comprehensive catalog administration:
+  - Full CRUD operations with file uploads to `public/pacakgeimages/`.
+  - Sidebar contains an in-place accordion submenu (`Create` & `Manage`) with
+    smooth toggle animation and auto-expanded active route detection.
+  - Image replacement utility for existing packages.
+
+6.8 Admin Booking Fulfillment & Audit Trail
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Admin\BookingController`
+- Views: `resources/views/admin/bookings/index.blade.php`
+- Description: Real-time fulfillment queue allowing administrators to:
+  - Confirm pending reservations (`POST /admin/bookings/{id}/confirm`).
+  - Cancel reservations (`POST /admin/bookings/{id}/cancel`).
+  - View comments in compact, bounded scrollable boxes (`.table-cell-comment`)
+    that prevent text overflows and huge row heights.
+  - Tables utilize `.table-responsive-admin` for smooth horizontal scrolling.
+
+6.9 User Management Directory & History Drilldown
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Admin\UserController`
+- Views: `resources/views/admin/users/index.blade.php`, `users/bookings.blade.php`
+- Description: Lists all registered travelers with registration and update
+  timestamps, along with a direct drill-down link to review each customer's
+  complete booking history.
+
+6.10 Static Content Management System (CMS)
+--------------------------------------------------------------------------------
+- Component: `App\Http\Controllers\Admin\PageController`, `App\Http\Controllers\PageController`
+- Views: `resources/views/admin/pages/index.blade.php`, `resources/views/pages/show.blade.php`
+- Description: In-browser editor enabling administrators to update Terms of Use,
+  Privacy Policy, About Us, and Contact Us content without altering code templates.
+
+
+================================================================================
+7. COMPLETE ROUTING DIRECTORY (WEB & CONSOLE)
+================================================================================
+
+PUBLIC & TRAVELER ROUTES:
+--------------------------------------------------------------------------------
+VERB      URI                       ACTION                              NAME
+GET       /                         HomeController@index                home
+GET       /packages                 TourPackageController@index         packages.index
+GET       /packages/{id}            TourPackageController@show          packages.show
+POST      /packages/{id}/book       BookingController@store             packages.book
+POST      /bookings/{id}            BookingController@store             bookings.store
+GET       /thank-you                BookingController@thankyou          bookings.thankyou
+GET       /tour-history             BookingController@history           bookings.history
+POST      /tour-history/{id}/cancel BookingController@cancel            bookings.cancel
+GET       /enquiry                  EnquiryController@index             enquiry.index
+GET       /enquiries                EnquiryController@index             enquiries.index
+POST      /enquiry                  EnquiryController@store             enquiry.store
+POST      /enquiries                EnquiryController@store             enquiries.store
+GET       /issues                   IssueController@index               issues.index
+POST      /issues                   IssueController@store               issues.store
+GET       /profile                  ProfileController@index             profile.index
+POST      /profile                  ProfileController@update            profile.update
+GET       /change-password          ProfileController@changePasswordForm profile.password
+POST      /change-password          ProfileController@updatePassword    profile.password.update
+GET       /page/{type}              PageController@show                 page.show
+GET       /pages/{type}             PageController@show                 pages.show
+GET       /login                    LoginController@showLoginForm       login
+POST      /login                    LoginController@login               login.submit
+GET,POST  /logout                   LoginController@logout              logout
+GET,POST  /logout.php               LoginController@logout              -
+GET       /register                 RegisterController@showRegistrationForm register
+POST      /register                 RegisterController@register         register.submit
+POST      /check-email              LoginController@checkEmail          check.email
+GET       /forgot-password          PasswordController@showForgotPassword password.request
+POST      /forgot-password          PasswordController@resetPassword    password.update
+
+ADMINISTRATOR PORTAL ROUTES (`/admin/` prefix):
+--------------------------------------------------------------------------------
+VERB      URI                               ACTION                     NAME
+GET       /admin/login                      AdminAuthController@showLoginForm admin.login
+POST      /admin/login                      AdminAuthController@login   admin.login.submit
+GET       /admin/forgot-password            AdminAuthController@showForgotPassword admin.forgot.password
+POST      /admin/forgot-password            AdminAuthController@forgotPassword admin.forgot.password.submit
+GET,POST  /admin/logout                     AdminAuthController@logout  admin.logout
+GET,POST  /admin/logout.php                 AdminAuthController@logout  -
+GET       /admin/dashboard                  AdminDashboardController@index admin.dashboard
+GET       /admin                            AdminDashboardController@index -
+GET       /admin/packages                   AdminPackageController@index admin.packages.index
+GET       /admin/packages/create            AdminPackageController@create admin.packages.create
+POST      /admin/packages                   AdminPackageController@store admin.packages.store
+GET       /admin/packages/{id}/edit         AdminPackageController@edit admin.packages.edit
+PUT,PATCH /admin/packages/{id}              AdminPackageController@update admin.packages.update
+DELETE    /admin/packages/{id}              AdminPackageController@destroy admin.packages.destroy
+GET       /admin/packages/{id}/change-image AdminPackageController@changeImageForm admin.packages.change-image
+POST      /admin/packages/{id}/change-image AdminPackageController@updateImage admin.packages.update-image
+GET       /admin/bookings                   AdminBookingController@index admin.bookings.index
+POST      /admin/bookings/{id}/confirm      AdminBookingController@confirm admin.bookings.confirm
+POST      /admin/bookings/{id}/cancel       AdminBookingController@cancel admin.bookings.cancel
+GET       /admin/users                      AdminUserController@index   admin.users.index
+GET       /admin/users/{email}/bookings     AdminUserController@userBookings admin.users.bookings
+GET       /admin/issues                     AdminIssueController@index  admin.issues.index
+GET       /admin/issues/{id}                AdminIssueController@show   admin.issues.show
+POST      /admin/issues/{id}/remark         AdminIssueController@updateRemark admin.issues.remark
+DELETE    /admin/issues/{id}                AdminIssueController@destroy admin.issues.destroy
+GET       /admin/enquiries                  AdminEnquiryController@index admin.enquiries.index
+POST      /admin/enquiries/{id}/read        AdminEnquiryController@markAsRead admin.enquiries.read
+DELETE    /admin/enquiries/{id}             AdminEnquiryController@destroy admin.enquiries.destroy
+GET       /admin/pages                      AdminPageController@index   admin.pages.index
+POST      /admin/pages                      AdminPageController@update  admin.pages.update
+GET       /admin/profile                    AdminProfileController@index admin.profile.index
+POST      /admin/profile                    AdminProfileController@update admin.profile.update
+GET       /admin/change-password            AdminProfileController@changePassword admin.profile.password
+POST      /admin/change-password            AdminProfileController@updatePassword admin.profile.password.update
+
+
+================================================================================
+8. SECURITY, AUTHENTICATION & HARDENING ARCHITECTURE
+================================================================================
+
+1. Multi-Guard Authentication Architecture:
+   - Configured in `config/auth.php`.
+   - Guard `web`: Drives the traveler portal using Eloquent provider on `App\Models\User`.
+   - Guard `admin`: Drives the operations dashboard using Eloquent provider on `App\Models\Admin`.
+   - Complete session separation prevents session fixation or cross-guard escalation.
+
+2. Multi-Tier Safe Password Verification:
+   - Implemented across Login, Admin Login, and Profile updates.
+   - Primary: Standard Bcrypt / Argon2 algorithms verified via `Hash::check()`.
+   - Fallback: Gracefully validates multi-format credentials using timing-attack-safe
+     `hash_equals()`, preventing runtime exception halts.
+   - Seamless Upgrade: Upon successful authentication, passwords are automatically
+     rehashed with Bcrypt (cost factor 12) and saved to the database.
+
+3. Cross-Site Request Forgery (CSRF) Prevention:
+   - Enforced across all POST, PUT, PATCH, and DELETE requests via
+     `Illuminate\Foundation\Http\Middleware\PreventRequestForgery`.
+   - Form templates embed `@csrf` directive generating hidden input tokens.
+
+4. SQL Injection Immunity:
+   - Database interaction relies on Laravel's Query Builder and Eloquent ORM.
+   - PDO uses parameterized prepared statements with explicit binding for all queries.
+
+5. Cross-Site Scripting (XSS) Mitigation:
+   - Blade templates automatically escape variables using `{{ ... }}` (htmlspecialchars).
+   - Unescaped `{!! ... !!}` syntax is strictly limited to sanitized CMS page bodies.
+
+6. Schema Tolerance & Remember Token Safeguards:
+   - Both `User` and `Admin` models implement `getRememberTokenName() { return ''; }`
+     to prevent runtime SQL exceptions on schemas without `remember_token` columns.
+
+
+================================================================================
+9. PROJECT FILE-BY-FILE CODEBASE MAP
+================================================================================
+- app/Http/Controllers/
+  - HomeController.php: Fetches featured packages for landing page.
+  - TourPackageController.php: Manages package listings and individual show views.
+  - BookingController.php: Handles reservation creation, history display, cancellation.
+  - EnquiryController.php: Handles traveler inquiry submissions.
+  - IssueController.php: Handles customer ticket creation and viewing.
+  - PageController.php: Serves dynamic CMS pages by slug.
+  - ProfileController.php: Traveler profile data and password management.
+  - Auth/LoginController.php: Traveler login, logout, email checks.
+  - Auth/RegisterController.php: Traveler registration with password hashing.
+  - Auth/PasswordController.php: Traveler password reset with verification.
+  - Admin/AuthController.php: Administrator sign-in, sign-out, password recovery.
+  - Admin/DashboardController.php: Computes real-time analytics and KPI metrics.
+  - Admin/PackageController.php: CRUD for tour packages and image uploads.
+  - Admin/BookingController.php: Booking confirmation, cancellation, and fulfillment.
+  - Admin/UserController.php: Customer directory and travel history drilldown.
+  - Admin/EnquiryController.php: Review, mark read, and delete inquiries.
+  - Admin/IssueController.php: Review support issues and submit admin remarks.
+  - Admin/PageController.php: CMS text editor for terms, privacy, about, contact.
+  - Admin/ProfileController.php: Administrator profile and credentials update.
+- app/Models/
+  - Admin.php, User.php, TourPackage.php, Booking.php, Enquiry.php, Issue.php, Page.php
+- resources/views/
+  - layouts/app.blade.php: Master layout for public and traveler portal.
+  - layouts/admin.blade.php: Master layout for administrative command center.
+  - components/header.blade.php: Navigation bar with initial avatar pill and user menu.
+  - components/sidebar.blade.php: Dark-forest admin navigation with nested packages submenu.
+  - components/footer.blade.php / admin-footer.blade.php: Public and admin footers.
+  - components/signin.blade.php / signup.blade.php / write-us.blade.php: Modals.
+
+
+================================================================================
+10. LOCAL SETUP, POWERSHELL RUNNER & DEPLOYMENT
+================================================================================
+
+Local Setup Steps:
+1. Ensure PHP 8.2+ and Composer are installed and available in PATH.
+2. Clone repository and navigate to root:
+   git clone <repo-url>
+   cd Wayfarer
+3. Install dependencies:
+   composer install
+4. Create environment file:
+   copy .env.example .env   (or verify existing .env)
+5. Generate application key:
+   php artisan key:generate
+6. Verify database credentials in .env:
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=tms
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+7. Provision database:
+   mysql -u root -p tms < database/tms.sql
+8. Launch application:
+   Using PowerShell:
+   .\run.ps1
+   Or using Artisan CLI:
+   php artisan serve --host=127.0.0.1 --port=8000
+
+Production Deployment Checklist:
+1. Set `APP_ENV=production` and `APP_DEBUG=false` in `.env`.
+2. Cache configuration and routes:
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+3. Configure web server document root to point to the `public/` directory.
+4. Ensure `storage/` and `bootstrap/cache/` directories are writable by the web server.
+
+
+================================================================================
+11. SYSTEM CREDENTIALS & QUICK REFERENCE GUIDE
+================================================================================
+
+PORTAL ENDPOINTS:
+- Public Website:    http://127.0.0.1:8000
+- Traveler Sign In:  http://127.0.0.1:8000/login
+- Admin Portal:      http://127.0.0.1:8000/admin/login
+
+DEMONSTRATION TEST ACCOUNTS:
+--------------------------------------------------------------------------------
+ROLE             IDENTIFIER / EMAIL          PASSWORD    ACCESS PORTAL
+Administrator    admin (or test@gmail.com)   pass@123    /admin/login
+Traveler         test@gmail.com              Test@123    /login
+
+================================================================================
+END OF SPECIFICATION — WAYFARER TOURISM & TRAVEL MANAGEMENT SYSTEM
+================================================================================
+
